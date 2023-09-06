@@ -17,7 +17,7 @@ let cont = 0;
 /**
  * Expresión regular para validar una URL
  */
-const regex = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})(\/[^\s]*)?$/;
+const regex = /^(https?:\/\/)([\w-]+(\.[\w-]+)+)(\/\S*)?$/;
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
@@ -57,12 +57,14 @@ app.get('/api/hello', (req, res) => {
   * GET /api/shorturl/:shorturl
   */
 app.get('/api/shorturl/:shorturl', (req, res) => {
-  logGet('req.params.shorturl', req.params.shorturl);
+  logGet('req.params.shorturl', req.params.shorturl, typeof req.params.shorturl);
   const urlFound = bd.filter((item) => item.short_url === req.params.shorturl);
   logGet('urlFound', urlFound);
 
   if (urlFound.length > 0) {
-    logGet('urlFound[0].original_url', urlFound[0].original_url);
+    // logGet('urlFound[0].original_url', urlFound[0].original_url);
+    logGet(`el parámetro ${req.params.shorturl} redirige a ${urlFound[0].original_url}`);
+    
     res.redirect(urlFound[0].original_url);
   }
 });

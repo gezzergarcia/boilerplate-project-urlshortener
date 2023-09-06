@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "DEBUG=app nodemon index.js"
   },
   "dependencies": {
+    "debug": "^4.3.4",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -15,6 +16,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "eslint": "^8.48.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "nodemon": "^3.0.1"
   }
 }

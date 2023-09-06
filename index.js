@@ -64,7 +64,6 @@ app.get('/api/shorturl/:shorturl', (req, res) => {
   if (urlFound.length > 0) {
     // logGet('urlFound[0].original_url', urlFound[0].original_url);
     logGet(`el parámetro ${req.params.shorturl} redirige a ${urlFound[0].original_url}`);
-    
     res.redirect(urlFound[0].original_url);
   }
 });

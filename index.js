@@ -30,7 +30,9 @@ const bodyParser = require('body-parser');
 /**
  * Módulo para imprimir logs
  */
-const log = require('debug')('app');
+const logGet = require('debug')('get');
+const logPost = require('debug')('post');
+const logApp = require('debug')('app');
 
 app.use(cors());
 
@@ -55,38 +57,38 @@ app.get('/api/hello', (req, res) => {
   * GET /api/shorturl/:shorturl
   */
 app.get('/api/shorturl/:shorturl', (req, res) => {
-  log('req.params.shorturl', req.params.shorturl);
+  logGet('req.params.shorturl', req.params.shorturl);
   const urlFound = bd.filter((item) => item.short_url === req.params.shorturl);
-  log('urlFound', urlFound);
+  logGet('urlFound', urlFound);
 
   if (urlFound.length > 0) {
-    log('urlFound[0].original_url', urlFound[0].original_url);
+    logGet('urlFound[0].original_url', urlFound[0].original_url);
     res.redirect(urlFound[0].original_url);
   }
 });
 
 app.post('/api/shorturl', (req, res) => {
-  log('req.body', req.body);
+  logPost('req.body', req.body);
 
   let responseObject = {};
 
   if (regex.test(req.body.url)) {
-    log('La URL es válida.');
+    logPost('La URL es válida.');
     responseObject = {
       original_url: req.body.url,
       short_url: `${cont += 1}`,
     };
     bd.push(responseObject);
   } else {
-    log('La URL no es válida.');
+    logPost('La URL no es válida.');
     responseObject = { error: 'invalid url' };
   }
 
-  log('responseObject', responseObject);
-  log('bd', bd);
+  logPost('responseObject', responseObject);
+  logApp('bd', bd);
   res.json(responseObject);
 });
 
 app.listen(port, () => {
-  log(`Listening on port ${port}`);
+  logApp(`Listening on port ${port}`);
 });
